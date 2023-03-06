@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @export var speed: int = 14
 @export var fall_acceleration: int = 75
+@export var jump_impulse: int = 20
 
 var target_velocity: Vector3 = Vector3.ZERO
 var direction_input: Vector3 = Vector3.ZERO
@@ -9,6 +10,7 @@ var direction_input: Vector3 = Vector3.ZERO
 func _physics_process(delta):
 	Handle_Input()
 	Look_At_Direction()
+	Jump()
 	Set_Velocity(delta)
 
 func Handle_Input() -> void:
@@ -28,6 +30,10 @@ func Handle_Input() -> void:
 func Look_At_Direction() -> void:
 	if direction_input != Vector3.ZERO:
 		$Pivot.look_at(position + direction_input, Vector3.UP)
+
+func Jump() -> void:
+	if is_on_floor() and Input.is_action_pressed("jump"):
+		target_velocity.y = jump_impulse
 
 func Set_Velocity(delta) -> void:
 	target_velocity.x = direction_input.x * speed
