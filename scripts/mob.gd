@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+class_name Mob
+
 signal squashed
 
 @export var min_speed: int = 10
