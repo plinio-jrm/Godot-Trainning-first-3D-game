@@ -14,3 +14,6 @@ func _on_mob_timer_timeout():
 	mob.Initialize(mob_spawn_location.position, player_position)
 	
 	add_child(mob)
+
+func _on_player_hit():
+	$Timers/MobTimer.stop()
