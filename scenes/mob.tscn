@@ -1,10 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://dy2lx24xag7wu"]
+[gd_scene load_steps=6 format=3 uid="uid://dy2lx24xag7wu"]
 
 [ext_resource type="Script" path="res://scripts/mob.gd" id="1_6ym8d"]
 [ext_resource type="PackedScene" uid="uid://cbkbjr3q82qve" path="res://art/mob.glb" id="1_qevxi"]
+[ext_resource type="Animation" uid="uid://y3uatwcipoxl" path="res://animations/float character animation.res" id="3_hyx3y"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pmxgj"]
 size = Vector3(1.55397, 1.49318, 2.30996)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vr54b"]
+_data = {
+"float character animation": ExtResource("3_hyx3y")
+}
 
 [node name="CharacterBody3D" type="CharacterBody3D" groups=["mob"]]
 collision_layer = 2
@@ -14,6 +20,7 @@ script = ExtResource("1_6ym8d")
 [node name="Pivot" type="Node3D" parent="."]
 
 [node name="Character" parent="Pivot" instance=ExtResource("1_qevxi")]
+transform = Transform3D(1, 0, 0, 0, 0.993348, -0.115149, 0, 0.115149, 0.993348, 0, 0.4, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.368476, -0.059)
@@ -22,5 +29,11 @@ shape = SubResource("BoxShape3D_pmxgj")
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.235196, 0.277195)
 aabb = AABB(-1.10458, -0.608989, -1.61697, 2.20916, 1.21798, 3.23394)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "float character animation"
+libraries = {
+"": SubResource("AnimationLibrary_vr54b")
+}
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_exited"]

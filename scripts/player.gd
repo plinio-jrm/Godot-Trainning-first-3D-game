@@ -15,6 +15,7 @@ func _physics_process(delta):
 	Look_At_Direction()
 	Jump()
 	Bounce()
+	Set_Animation()
 	Set_Velocity(delta)
 
 func Handle_Input() -> void:
@@ -50,6 +51,14 @@ func Bounce() -> void:
 			if Vector3.UP.dot(collision.get_normal()) > 0.1:
 				mob.Squash()
 				target_velocity.y = bounce_impulse
+
+func Set_Animation() -> void:
+	if direction_input != Vector3.ZERO:
+		$AnimationPlayer.speed_scale = 4
+	else:
+		$AnimationPlayer.speed_scale = 1
+	
+	$Pivot.rotation.x = PI / 6 * velocity.y / jump_impulse
 
 func Set_Velocity(delta) -> void:
 	target_velocity.x = direction_input.x * speed
